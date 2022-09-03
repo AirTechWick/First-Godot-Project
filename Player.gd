@@ -1,15 +1,17 @@
 extends KinematicBody2D
 
-var run_speed = 350
-var jump_speed = -500
-var gravity = 1000
+export var run_speed = 350 # Need these large numbers because we are using delta in our code which is a very large fraction
+export var jump_speed = -500
+export var gravity = 1000
 var justLanded : bool
 
-var velocity = Vector2()
+
+var velocity = Vector2() # Can also be called position if not using an angle
 onready var _animated_sprite = $AnimatedSprite
 
 
-func _physics_process(delta):
+
+func _physics_process(delta): # delta is the amount of time elapsed during one frame
 	velocity.y += gravity * delta
 	get_input()
 	play_animations()
@@ -26,9 +28,9 @@ func get_input():
 		velocity.y = jump_speed
 		_animated_sprite.play("jump")
 	
-	if right:
+	if right: # if right press is detected
 		velocity.x += run_speed
-	if left:
+	if left: # if left press is detected
 		velocity.x -= run_speed
 
 func play_animations():
@@ -48,10 +50,18 @@ func play_animations():
 	
 
 func checkLanding():
+	var movingRight = Input.is_action_pressed("move_right")
+	var movingLeft = Input.is_action_pressed("move_left")
 	if is_on_floor():
 		if justLanded: # if we are on the floor and just landed
-			_animated_sprite.play("idle")
-			justLanded = false
+			if movingRight || movingLeft:
+				_animated_sprite.play("run")
+				justLanded = false
+			else:
+				_animated_sprite.play("idle")
+				justLanded = false
 	else: # in the air 
 		if !justLanded: # if we are in the air and have not landed yet
-			justLanded = true 
+			justLanded = true
+
+
