@@ -29,26 +29,11 @@ animations = [ {
 "speed": 12.0
 } ]
 
-[sub_resource type="GDScript" id=3]
-script/source = "extends Timer
-
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = \"text\"
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
-"
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 82, 10 )
 
 [node name="BeeEnemy" type="KinematicBody2D"]
+collision_layer = 4
 script = ExtResource( 11 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -61,11 +46,23 @@ frames = SubResource( 1 )
 frame = 3
 playing = true
 
-[node name="BeeTimer" type="Timer" parent="."]
+[node name="BeeDirectionTimer" type="Timer" parent="."]
 autostart = true
-script = SubResource( 3 )
 __meta__ = {
 "_editor_description_": ""
 }
 
-[connection signal="timeout" from="BeeTimer" to="." method="changeDirection"]
+[node name="BeeHitAnimationTimer" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+
+[node name="BeeHitBox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BeeHitBox"]
+modulate = Color( 1, 0, 0.211765, 1 )
+position = Vector2( 0, -64 )
+shape = SubResource( 3 )
+
+[connection signal="timeout" from="BeeDirectionTimer" to="." method="changeDirection"]
+[connection signal="timeout" from="BeeHitAnimationTimer" to="." method="_on_BeeHitAnimationTimer_timeout"]
+[connection signal="body_entered" from="BeeHitBox" to="." method="_on_BeeHitBox_body_entered"]
