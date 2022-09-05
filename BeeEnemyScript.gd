@@ -30,12 +30,24 @@ func _process(delta):
 func changeDirection():
 	velocity.x *= -1
 	
-	if velocity.x > 0:
+	if _animated_sprite.flip_h == true:
 		_animated_sprite.flip_h = false
-	elif velocity.x < 0:
+	else:
 		_animated_sprite.flip_h = true
-	else: # if velocity is 0
-		if _animated_sprite.flip_h == false: # sprite facing right
-			velocity.x = flying_speed
-		else:
-			velocity.x = -flying_speed
+	
+	if abs(velocity.x) != flying_speed && _animated_sprite.flip_h == false:
+		velocity.x = flying_speed
+	elif abs(velocity.x) != flying_speed && _animated_sprite.flip_h == true:
+		velocity.x = -flying_speed
+		
+		
+	
+#	if velocity.x > 0:
+#		_animated_sprite.flip_h = false
+#	elif velocity.x < 0:
+#		_animated_sprite.flip_h = true
+#	else: # if velocity is 0
+#		if _animated_sprite.flip_h == false: # sprite facing right
+#			velocity.x = flying_speed
+#		else:
+#			velocity.x = -flying_speed
