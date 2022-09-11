@@ -10,11 +10,17 @@ onready var _bee_timer = $BeeDirectionTimer
 onready var _bee_animation_timer = $BeeHitAnimationTimer
 var velocity = Vector2()
 export var flying_speed = 200
-export var flying_range = 10  
+export var flying_range = 10
+export(String, "Left", "Right") var starting_direction
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	velocity.x = flying_speed
+	if starting_direction == "Right":
+		velocity.x = flying_speed
+		_animated_sprite.flip_h = false
+	if starting_direction == "Left":
+		velocity.x = -flying_speed
+		_animated_sprite.flip_h = true # true means facing left
 	_bee_timer.wait_time = flying_range/10 # Changes the wait time of the change direction timer
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -40,8 +46,7 @@ func changeDirection():
 
 
 func _on_BeeHitBox_body_entered(body):
-	print(body)
-	body.velocity.y = -400 # Replace with function body
+	body.velocity.y = -600 
 	self._animated_sprite.play("hit")
 	_bee_animation_timer.start()
 

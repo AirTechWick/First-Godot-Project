@@ -12,14 +12,16 @@ onready var _animated_sprite = $AnimatedSprite
 
 
 func _physics_process(delta): # delta is the amount of time elapsed during one frame
+	print(velocity.x)
 	velocity.y += gravity * delta
+	defaultVelocityX()
 	get_input()
 	play_animations()
 	velocity = move_and_slide(velocity, Vector2(0, -1))
 
 
 func get_input():
-	velocity.x = 0
+	
 	var right = Input.is_action_pressed("move_right")
 	var left = Input.is_action_pressed("move_left")
 	var jump = Input.is_action_just_pressed("jump_up")
@@ -64,4 +66,14 @@ func checkLanding():
 		if !justLanded: # if we are in the air and have not landed yet
 			justLanded = true
 
+func defaultVelocityX():
+	# Can get variables from other nodes with ".." to go to parent in tree first
+	if abs(velocity.x) == get_node("../LeftFlowerTrampoline")._strength_x: # if we are being boosted by timer, this is hardcoded
+		null # do nothing
+	else:
+		velocity.x = 0
 
+
+
+func _on_JumpBoostTimer_timeout():
+	velocity.x = 0 # Replace with function body.

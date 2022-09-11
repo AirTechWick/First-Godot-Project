@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=2]
+[gd_scene load_steps=60 format=2]
 
 [ext_resource path="res://Assets/Free Platform Game Assets/Platform Game Assets/Background/png/1920x1080/Background/Background.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Free 2/Main Characters/Virtual Guy/Idle (32x32).png" type="Texture" id=2]
@@ -11,6 +11,8 @@
 [ext_resource path="res://Assets/Free 2/Main Characters/Virtual Guy/Double Jump (32x32).png" type="Texture" id=9]
 [ext_resource path="res://ShredderPlatform.tscn" type="PackedScene" id=10]
 [ext_resource path="res://BeeEnemy.tscn" type="PackedScene" id=11]
+[ext_resource path="res://FlowerTrampoline.gd" type="Script" id=12]
+[ext_resource path="res://Assets/Free Platform Game Assets/Platform Game Assets/Environment/png/All/4x/Asset 14.png" type="Texture" id=13]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 10.5, 14.1667 )
@@ -266,6 +268,9 @@ animations = [ {
 [sub_resource type="RectangleShape2D" id=26]
 extents = Vector2( 128, 32 )
 
+[sub_resource type="CapsuleShape2D" id=70]
+height = 63.2484
+
 [node name="Node2D" type="Node2D"]
 position = Vector2( -160, 51 )
 
@@ -382,3 +387,35 @@ scale = Vector2( 15, 3 )
 [node name="BeeEnemy" parent="." instance=ExtResource( 11 )]
 position = Vector2( 962, 352 )
 scale = Vector2( 0.5, 0.5 )
+starting_direction = "Right"
+
+[node name="BeeEnemy2" parent="." instance=ExtResource( 11 )]
+position = Vector2( 1144, 200 )
+scale = Vector2( 0.5, 0.5 )
+starting_direction = "Left"
+
+[node name="AnimatedSprite" parent="BeeEnemy2" index="1"]
+frame = 4
+
+[node name="LeftFlowerTrampoline" type="Node2D" parent="."]
+position = Vector2( 1493, 43 )
+script = ExtResource( 12 )
+
+[node name="JumpBoostTimer" type="Timer" parent="LeftFlowerTrampoline"]
+wait_time = 2.0
+one_shot = true
+
+[node name="Sprite" type="Sprite" parent="LeftFlowerTrampoline"]
+texture = ExtResource( 13 )
+
+[node name="TrampolineHitbox" type="Area2D" parent="LeftFlowerTrampoline"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftFlowerTrampoline/TrampolineHitbox"]
+position = Vector2( -18, -40 )
+rotation = 1.13446
+shape = SubResource( 70 )
+
+[connection signal="timeout" from="LeftFlowerTrampoline/JumpBoostTimer" to="Player" method="_on_JumpBoostTimer_timeout"]
+[connection signal="body_entered" from="LeftFlowerTrampoline/TrampolineHitbox" to="LeftFlowerTrampoline" method="_on_TrampolineHitbox_body_entered"]
+
+[editable path="BeeEnemy2"]
