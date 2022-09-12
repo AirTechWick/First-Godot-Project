@@ -17,7 +17,7 @@ func _ready():
 
 
 func _on_StartButton_pressed():
-	get_tree().change_scene("res://FirstScene.tscn") # Replace with function body.
+	get_tree().change_scene("res://FirstScene.tscn") 
 
 
 func _on_Quit_pressed():

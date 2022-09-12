@@ -40,13 +40,13 @@ func play_animations():
 	
 	if Input.is_action_just_pressed("move_right"):
 		_animated_sprite.play("run")
-		_animated_sprite.flip_h = false # by default the sprite faces right on false
+		_animated_sprite.flip_h = true # by default the sprite faces left on false
 	if Input.is_action_just_released("move_right"):
 		_animated_sprite.play("idle")
 		
 	if Input.is_action_just_pressed("move_left"):
 		_animated_sprite.play("run")
-		_animated_sprite.flip_h = true
+		_animated_sprite.flip_h = false
 	if Input.is_action_just_released("move_left"):
 		_animated_sprite.play("idle")
 	
