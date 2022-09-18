@@ -12,7 +12,6 @@ onready var _animated_sprite = $AnimatedSprite
 
 
 func _physics_process(delta): # delta is the amount of time elapsed during one frame
-	print(velocity.x)
 	velocity.y += gravity * delta
 	defaultVelocityX()
 	get_input()
