@@ -8,6 +8,7 @@ const UPWARDS = Vector2(0,-1)
 onready var _animated_sprite = $AnimatedSprite
 onready var _bee_timer = $BeeDirectionTimer
 onready var _bee_animation_timer = $BeeHitAnimationTimer
+onready var _sound_hit = $SoundHit
 var velocity = Vector2()
 export var flying_speed = 200
 export var flying_range = 10
@@ -47,6 +48,7 @@ func changeDirection():
 
 func _on_BeeHitBox_body_entered(body):
 	body.velocity.y = -600 
+	self._sound_hit.play()
 	self._animated_sprite.play("hit")
 	_bee_animation_timer.start()
 

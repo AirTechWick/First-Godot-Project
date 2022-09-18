@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=2]
+[gd_scene load_steps=46 format=2]
 
 [ext_resource path="res://Assets/Free Platform Game Assets/Platform Game Assets/Background/png/1920x1080/Background/Background.png" type="Texture" id=1]
 [ext_resource path="res://Assets/FirstLamaSpritesheets/LamaSpriteSheet_Lama_Idle.png" type="Texture" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Assets/FirstLamaSpritesheets/LamaSpriteSheet_Lama_Run.png" type="Texture" id=4]
 [ext_resource path="res://Assets/Free Platform Game Assets/Platform Game Assets/Tiles/png/128x128/Grass.png" type="Texture" id=5]
 [ext_resource path="res://Assets/FirstLamaSpritesheets/LamaSpriteSheet_Lama_Jump.png" type="Texture" id=6]
+[ext_resource path="res://Assets/George-Street-Shuffle.mp3" type="AudioStream" id=7]
 [ext_resource path="res://ShredderPlatform.tscn" type="PackedScene" id=10]
 [ext_resource path="res://BeeEnemy.tscn" type="PackedScene" id=11]
 [ext_resource path="res://FlowerTrampoline.gd" type="Script" id=12]
@@ -218,8 +219,6 @@ position = Vector2( 1, 1.33325 )
 scale = Vector2( 0.0680527, 0.072799 )
 frames = SubResource( 81 )
 animation = "run"
-frame = 7
-playing = true
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2( 0, -0.199997 )
@@ -322,7 +321,7 @@ scale = Vector2( 0.5, 0.5 )
 starting_direction = "Left"
 
 [node name="AnimatedSprite" parent="BeeEnemy2" index="1"]
-frame = 4
+frame = 0
 
 [node name="LeftFlowerTrampoline" type="Node2D" parent="."]
 position = Vector2( 1493, 43 )
@@ -341,6 +340,11 @@ texture = ExtResource( 13 )
 position = Vector2( -18, -40 )
 rotation = 1.13446
 shape = SubResource( 70 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+volume_db = -26.235
+autoplay = true
 
 [connection signal="timeout" from="LeftFlowerTrampoline/JumpBoostTimer" to="Player" method="_on_JumpBoostTimer_timeout"]
 [connection signal="body_entered" from="LeftFlowerTrampoline/TrampolineHitbox" to="LeftFlowerTrampoline" method="_on_TrampolineHitbox_body_entered"]

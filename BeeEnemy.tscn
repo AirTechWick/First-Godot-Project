@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Assets/FreeBeeEnemy/BIG/HIT/Bee_0008_Capa-9.png" type="Texture" id=1]
 [ext_resource path="res://Assets/FreeBeeEnemy/BIG/HIT/Bee_0009_Capa-0.png" type="Texture" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://Assets/FreeBeeEnemy/BIG/Bee_0004_Capa-5.png" type="Texture" id=9]
 [ext_resource path="res://Assets/FreeBeeEnemy/BIG/Bee_0000_Capa-1.png" type="Texture" id=10]
 [ext_resource path="res://BeeEnemyScript.gd" type="Script" id=11]
+[ext_resource path="res://Assets/qubodup-cfork-ccby3-jump.ogg" type="AudioStream" id=12]
 
 [sub_resource type="CapsuleShape2D" id=2]
 radius = 68.0
@@ -43,7 +44,7 @@ shape = SubResource( 2 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
-frame = 3
+frame = 4
 playing = true
 
 [node name="BeeDirectionTimer" type="Timer" parent="."]
@@ -62,6 +63,10 @@ one_shot = true
 modulate = Color( 1, 0, 0.211765, 1 )
 position = Vector2( 0, -64 )
 shape = SubResource( 3 )
+
+[node name="SoundHit" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 12 )
+volume_db = -23.597
 
 [connection signal="timeout" from="BeeDirectionTimer" to="." method="changeDirection"]
 [connection signal="timeout" from="BeeHitAnimationTimer" to="." method="_on_BeeHitAnimationTimer_timeout"]
